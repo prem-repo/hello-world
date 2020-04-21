@@ -18,6 +18,9 @@ pipeline {
    stages{
     stage('Build') {
      steps {
+		echo 'Building..'
+        sh "mvn clean install"
+               
         // Get SHA1 of current commit
         script {
             commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
