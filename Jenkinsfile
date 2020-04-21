@@ -15,8 +15,9 @@ pipeline {
     
     // Here you can define one or more stages for your pipeline.
     // Each stage can execute one or more steps.
-   stage('Build') {
-    steps {
+   stages{
+    stage('Build') {
+     steps {
         // Get SHA1 of current commit
         script {
             commit_id = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
@@ -29,9 +30,9 @@ pipeline {
         sh "docker push ${docker_repo_uri}:${commit_id}"
         // Clean up
         sh "docker rmi -f ${docker_repo_uri}:${commit_id}"
-    }
- }
-   stage('Deploy') {
+     }
+  }
+  stage('Deploy') {
     steps {
         // Override image field in taskdef file
         sh "sed -i 's|{{image}}|${docker_repo_uri}:${commit_id}|' taskdef.json"
@@ -40,5 +41,6 @@ pipeline {
         // Update service on Fargate
         sh "aws ecs update-service --cluster ${cluster} --service sample-app-service --task-definition ${task_def_arn} --region ${region}"
     }
+  }
  }
 }
