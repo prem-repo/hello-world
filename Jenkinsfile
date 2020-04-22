@@ -4,13 +4,14 @@ pipeline {
     // This line is required for declarative pipelines. Just keep it here.
     agent any
     tools {
-	jdk 'java' 
-        maven 'M3'
+	java 'jdk1.8'
+	maven 'M3'
     }
 
     // This section contains environment variables which are available for use in the
     // pipeline's stages.
     environment {
+	    //JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.50.amzn1.x86_64"
 	    region = "us-east-1"
         docker_repo_uri = "819314761995.dkr.ecr.us-east-1.amazonaws.com/sample-app"
 		task_def_arn = "arn:aws:ecs:us-east-1:819314761995:task-definition/first-run-task-definition"
@@ -24,7 +25,8 @@ pipeline {
     stage('Build') {
      steps {
 		echo 'Building..'
-	sh 'echo $PATH'
+	sh "echo $PATH"
+	
         sh "mvn clean install"
                
         // Get SHA1 of current commit
