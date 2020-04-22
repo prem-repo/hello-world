@@ -23,6 +23,7 @@ pipeline {
     stage('Build') {
      steps {
 		echo 'Building..'
+	sh export "$PATH"
         sh "mvn clean install"
                
         // Get SHA1 of current commit
