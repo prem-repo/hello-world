@@ -4,7 +4,7 @@ pipeline {
     // This line is required for declarative pipelines. Just keep it here.
     agent any
     tools {
-	java 'jdk1.8'
+	jdk 'jdk1.8'
 	maven 'M3'
     }
 
