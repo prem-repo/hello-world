@@ -36,7 +36,7 @@ pipeline {
         // Build the Docker image
         sh "docker build -t ${docker_repo_uri}:${commit_id} ."
         // Get Docker login credentials for ECR
-        sh "aws ecr get-login --no-include-email --region ${region} | sh"
+        sh "/usr/local/bin/aws ecr get-login --no-include-email --region ${region} | sh"
         // Push Docker image
         sh "docker push ${docker_repo_uri}:${commit_id}"
         // Clean up
@@ -48,9 +48,9 @@ pipeline {
         // Override image field in taskdef file
         sh "sed -i 's|{{image}}|${docker_repo_uri}:${commit_id}|' taskdef.json"
         // Create a new task definition revision
-        sh "aws ecs register-task-definition --execution-role-arn ${exec_role_arn} --cli-input-json file://taskdef.json --region ${region}"
+        sh "/usr/local/bin/aws ecs register-task-definition --execution-role-arn ${exec_role_arn} --cli-input-json file://taskdef.json --region ${region}"
         // Update service on Fargate
-        sh "aws ecs update-service --cluster ${cluster} --service sample-app-service --task-definition ${task_def_arn} --region ${region}"
+        sh "/usr/local/bin/aws ecs update-service --cluster ${cluster} --service sample-app-service --task-definition ${task_def_arn} --region ${region}"
     }
   }
  }
