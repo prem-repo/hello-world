@@ -6,7 +6,7 @@ pipeline{
 	stages{
 		stage("prepare build"){
 			stepes{
-				echo "prepare build"
+				echo "prepare - build"
 			}
 		}
 		stage("run build"){
