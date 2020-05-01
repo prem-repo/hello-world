@@ -5,12 +5,12 @@ pipeline{
 	}
 	stages{
 		stage("prepare build"){
-			stepes{
+			steps{
 				echo "prepare - build"
 			}
 		}
 		stage("run build"){
-			stepes{
+			steps{
 				echo "run - build"
 			}
 		}
