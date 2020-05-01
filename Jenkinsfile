@@ -11,7 +11,7 @@ pipeline{
 		}
 		stage("run build"){
 			stepes{
-				echo "run build"
+				echo "run- build"
 			}
 		}
 	}
